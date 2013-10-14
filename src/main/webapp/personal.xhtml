@@ -3,11 +3,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"      
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>ONIX Management Panel</title>
+	<style type="text/css">
+		.ui-layout-pane {
+		    border: 0;
+		}	
+	</style>
 </h:head>
 <h:body>
-	Hi!
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" size="80" id="main_menu">
+			<h:form>
+				<p:menubar>
+					<p:menuitem value="Home" url="#" style="vertical-align:bottom" icon="ui-icon-home" />					
+					<p:menuitem value="Browse Messages" url="#" icon="ui-icon-folder-open" />
+					<p:menuitem value="Send Message" url="#" icon="ui-icon-mail-closed" />
+					<p:menuitem value="Message Receiver Settings" url="#" icon="ui-icon-wrench" />
+					<p:menuitem value="Settings" url="#" icon="ui-icon-gear" />
+					<f:facet name="options">
+						<p:commandButton type="button" value="Sign Out" icon="ui-icon-closethick" />
+					</f:facet>
+				</p:menubar> 
+			</h:form>
+		</p:layoutUnit>
+		<p:layoutUnit position="center" id="content">
+			<ui:include src="/home.xhtml" />
+		</p:layoutUnit>
+	</p:layout>
 </h:body>
 </html>

@@ -26,6 +26,9 @@ public class Registration {
 			if(user == null) {
 				usersCollection.insert(new BasicDBObject("login", login).append("password", password));
 				logged = true;
+				Navigation nav = (Navigation)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("navigation");
+				nav.setLogged(logged);
+				nav.setPage("home");
 			} else {
 				FacesContext.getCurrentInstance()
 					.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Such user already exists", "Login taken"));
@@ -47,6 +50,9 @@ public class Registration {
 				.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong Credentials", "Login-Passowrd pair wrong"));
 			} else {
 				logged = true;
+				Navigation nav = (Navigation)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("navigation");
+				nav.setLogged(logged);
+				nav.setPage("home");
 			}
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

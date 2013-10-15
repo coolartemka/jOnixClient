@@ -24,13 +24,16 @@
 					<p:menuitem value="Message Receiver Settings" url="#" icon="ui-icon-wrench" />
 					<p:menuitem value="Settings" url="#" icon="ui-icon-gear" />
 					<f:facet name="options">
-						<p:commandButton type="button" value="Sign Out" icon="ui-icon-closethick" />
+						<p:commandButton value="Sign Out" icon="ui-icon-closethick" action="index">
+							<f:setPropertyActionListener target="#{navigation.page}" value="login" />
+							<f:setPropertyActionListener target="#{navigation.logged}" value="false" />
+						</p:commandButton>
 					</f:facet>
 				</p:menubar> 
 			</h:form>
 		</p:layoutUnit>
 		<p:layoutUnit position="center" id="content">
-			<ui:include src="/home.xhtml" />
+			<ui:include src="#{navigation.page}.xhtml" />
 		</p:layoutUnit>
 	</p:layout>
 </h:body>

@@ -1,7 +1,5 @@
 package fi.metropolia.ereading;
 
-import java.net.UnknownHostException;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
@@ -18,47 +16,33 @@ public class Registration {
 	private boolean logged = false;
 	
 	public void register(ActionEvent arg0) {
-		Mongo client = null;
-		try {
-			client = new MongoClient("localhost", 27017);
-			DBCollection usersCollection = client.getDB("jOnixUsers").getCollection("users");
-			DBObject user = usersCollection.findOne(new BasicDBObject("login", login));
-			if(user == null) {
-				usersCollection.insert(new BasicDBObject("login", login).append("password", password));
-				logged = true;
-				Navigation nav = (Navigation)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("navigation");
-				nav.setLogged(logged);
-				nav.setPage("home");
-			} else {
-				FacesContext.getCurrentInstance()
-					.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Such user already exists", "Login taken"));
-			}
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} finally {
-			client.close();
-		}
+		DBCollection usersCollection = MongoResource.getClient().getDB("jOnix").getCollection("users");
+		DBObject user = usersCollection.findOne(new BasicDBObject("login", login));
+		if(user == null) {
+			usersCollection.insert(new BasicDBObject("login", login).append("password", password));
+			logged = true;
+			Navigation nav = (Navigation)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("navigation");
+			nav.setLogged(logged);
+			nav.setPage("home");
+			nav.setLogin(login);
+		} else {
+			FacesContext.getCurrentInstance()
+				.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Such user already exists", "Login taken"));
+		}	
 	}
 	public void login(ActionEvent arg0) {
-		Mongo client = null;
-		try {
-			client = new MongoClient("localhost", 27017);
-			DBCollection usersCollection = client.getDB("jOnixUsers").getCollection("users");
-			DBObject user = usersCollection.findOne(new BasicDBObject("login", login).append("password", password));
-			if(user == null) {
-				FacesContext.getCurrentInstance()
-				.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong Credentials", "Login-Passowrd pair wrong"));
-			} else {
-				logged = true;
-				Navigation nav = (Navigation)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("navigation");
-				nav.setLogged(logged);
-				nav.setPage("home");
-			}
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} finally {
-			client.close();
-		}
+		DBCollection usersCollection = MongoResource.getClient().getDB("jOnix").getCollection("users");
+		DBObject user = usersCollection.findOne(new BasicDBObject("login", login).append("password", password));
+		if(user == null) {
+			FacesContext.getCurrentInstance()
+			.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong Credentials", "Login-Passowrd pair wrong"));
+		} else {
+			logged = true;
+			Navigation nav = (Navigation)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("navigation");
+			nav.setLogged(logged);
+			nav.setPage("home");
+			nav.setLogin(login);
+		}		
 	}
 	public String proceed() {
 		if(logged) {

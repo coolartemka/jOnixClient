@@ -13,16 +13,23 @@
 		}	
 	</style>
 </h:head>
-<h:body>
+<h:body>	
 	<p:layout fullPage="true">
 		<p:layoutUnit position="north" size="80" id="main_menu">
 			<h:form>
 				<p:menubar>
-					<p:menuitem value="Home" url="#" style="vertical-align:bottom" icon="ui-icon-home" />					
-					<p:menuitem value="Browse Messages" url="#" icon="ui-icon-folder-open" />
-					<p:menuitem value="Send Message" url="#" icon="ui-icon-mail-closed" />
-					<p:menuitem value="Message Receiver Settings" url="#" icon="ui-icon-wrench" />
-					<p:menuitem value="Settings" url="#" icon="ui-icon-gear" />
+					<p:menuitem value="Home" update=":content" style="vertical-align:bottom" icon="ui-icon-home">
+						<f:setPropertyActionListener target="#{navigation.page}" value="home" />
+					</p:menuitem>					
+					<p:menuitem value="Browse Messages" update=":content" icon="ui-icon-folder-open">
+						<f:setPropertyActionListener target="#{navigation.page}" value="browse" />
+					</p:menuitem>
+					<p:menuitem value="Send Message" update=":content" icon="ui-icon-mail-closed">
+						<f:setPropertyActionListener target="#{navigation.page}" value="send" />
+					</p:menuitem>
+					<p:menuitem value="Settings" update=":content" icon="ui-icon-wrench">
+						<f:setPropertyActionListener target="#{navigation.page}" value="settings" />
+					</p:menuitem>
 					<f:facet name="options">
 						<p:commandButton value="Sign Out" icon="ui-icon-closethick" action="index">
 							<f:setPropertyActionListener target="#{navigation.page}" value="login" />
@@ -32,8 +39,10 @@
 				</p:menubar> 
 			</h:form>
 		</p:layoutUnit>
-		<p:layoutUnit position="center" id="content">
-			<ui:include src="#{navigation.page}.xhtml" />
+		<p:layoutUnit position="center">
+			<p:panel id="content">
+				<ui:include src="#{navigation.page}.xhtml" />
+			</p:panel>
 		</p:layoutUnit>
 	</p:layout>
 </h:body>

@@ -8,6 +8,7 @@ public class Navigation {
 
 	private String page = "login";
 	private boolean logged = false;
+	private String login = null;
 	
 	public String getPage() {
 		return page;
@@ -20,6 +21,12 @@ public class Navigation {
 	}
 	public void setLogged(boolean logged) {
 		this.logged = logged;
+	}
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
 	}	
 	
 }

@@ -13,39 +13,36 @@ public class Registration {
 
 	private String login;
 	private String password;
-	private boolean logged = false;
+	@ManagedProperty(value="#{navigation}")
+	private Navigation navigation;
 	
-	public void register(ActionEvent arg0) {
+	public void register(ActionEvent event) {
 		DBCollection usersCollection = MongoResource.getClient().getDB("jOnix").getCollection("users");
 		DBObject user = usersCollection.findOne(new BasicDBObject("login", login));
 		if(user == null) {
 			usersCollection.insert(new BasicDBObject("login", login).append("password", password));
-			logged = true;
-			Navigation nav = (Navigation)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("navigation");
-			nav.setLogged(logged);
-			nav.setPage("home");
-			nav.setLogin(login);
+			navigation.setLogged(true);
+			navigation.setLogin(login);
+			navigation.setPage("home");
 		} else {
 			FacesContext.getCurrentInstance()
 				.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Such user already exists", "Login taken"));
 		}	
 	}
-	public void login(ActionEvent arg0) {
+	public void login(ActionEvent event) {
 		DBCollection usersCollection = MongoResource.getClient().getDB("jOnix").getCollection("users");
 		DBObject user = usersCollection.findOne(new BasicDBObject("login", login).append("password", password));
 		if(user == null) {
 			FacesContext.getCurrentInstance()
 			.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wrong Credentials", "Login-Passowrd pair wrong"));
 		} else {
-			logged = true;
-			Navigation nav = (Navigation)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("navigation");
-			nav.setLogged(logged);
-			nav.setPage("home");
-			nav.setLogin(login);
+			navigation.setLogged(true);
+			navigation.setPage("home");
+			navigation.setLogin(login);
 		}		
 	}
 	public String proceed() {
-		if(logged) {
+		if(navigation.isLogged()) {
 			return "personal";
 		} else {
 			return null;
@@ -64,11 +61,11 @@ public class Registration {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public boolean isRegistered() {
-		return logged;
+	public Navigation getNavigation() {
+		return navigation;
 	}
-	public void setRegistered(boolean logged) {
-		this.logged = logged;
+	public void setNavigation(Navigation navigation) {
+		this.navigation = navigation;
 	}	
 
 }

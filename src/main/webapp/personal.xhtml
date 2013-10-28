@@ -27,14 +27,14 @@
 					<p:menuitem value="Send Message" update=":content" icon="ui-icon-mail-closed">
 						<f:setPropertyActionListener target="#{navigation.page}" value="send" />
 					</p:menuitem>
+					<p:menuitem value="Output Bus" update=":content" style="vertical-align:bottom" icon="ui-icon-transferthick-e-w">
+						<f:setPropertyActionListener target="#{navigation.page}" value="output" />
+					</p:menuitem>		
 					<p:menuitem value="Settings" update=":content" icon="ui-icon-wrench">
 						<f:setPropertyActionListener target="#{navigation.page}" value="settings" />
 					</p:menuitem>
 					<f:facet name="options">
-						<p:commandButton value="Sign Out" icon="ui-icon-closethick" action="index">
-							<f:setPropertyActionListener target="#{navigation.page}" value="login" />
-							<f:setPropertyActionListener target="#{navigation.logged}" value="false" />
-						</p:commandButton>
+						<p:commandButton value="Sign Out" icon="ui-icon-closethick" actionListener="#{navigation.logout}" action="index" />
 					</f:facet>
 				</p:menubar> 
 			</h:form>

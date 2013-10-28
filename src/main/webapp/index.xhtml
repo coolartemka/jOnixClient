@@ -10,14 +10,16 @@
 <h:body>
 	<p:growl id="errorMessages" />
 	<p:panel id="loginPanel" header="Sign In" style="width:380px;margin:auto auto" visible="#{navigation.page == 'login'}">
-		<h:form>					
+		<h:form>
 			<h:panelGrid columns="2">				
 				<p:outputLabel for="login" value="Login:" style="display:block;text-align:right;font-weight:bold" />
 				<p:inputText id="login" value="#{registration.login}" required="true" requiredMessage="Login must be specified" />
 				<p:outputLabel for="password" value="Password:" style="display:block;text-align:right;font-weight:bold" />
 				<p:password id="password" value="#{registration.password}" required="true" requiredMessage="Password must be specified" />
 				<p:spacer />
-				<p:commandButton value="Proceed" actionListener="#{registration.login}" action="#{registration.proceed}" update=":loginPanel :errorMessages" style="font-size:15px;width:150px;height:35px;margin-top:5px;float:right"/>
+				<p:commandButton value="Proceed" actionListener="#{registration.login}" action="#{registration.proceed}" 
+								 update=":loginPanel :errorMessages" 
+								 style="font-size:15px;width:150px;height:35px;margin-top:5px;float:right"/>
 				<p:spacer />
 				<p:commandLink id="registrationLink" style="font-size:15px;float:right" update=":loginPanel :registerPanel" immediate="true">
 					<f:setPropertyActionListener target="#{navigation.page}" value="register" />
@@ -32,9 +34,12 @@
 				<p:outputLabel for="login" value="New Login:" style="display:block;text-align:right;font-weight:bold" />
 				<p:inputText id="login" value="#{registration.login}" required="true" requiredMessage="Login must be specified" />
 				<p:outputLabel for="password" value="New Password:" style="display:block;text-align:right;font-weight:bold" />
-				<p:password feedback="true" id="password" value="#{registration.password}" required="true" requiredMessage="Password must be specified" />
+				<p:password feedback="true" id="password" value="#{registration.password}" required="true" 
+							requiredMessage="Password must be specified" />
 				<p:spacer />
-				<p:commandButton value="Register" actionListener="#{registration.register}" action="#{registration.proceed}" update=":registerPanel :errorMessages" style="font-size:15px;width:150px;height:35px;margin-top:5px;float:right"/>
+				<p:commandButton value="Register" actionListener="#{registration.register}" action="#{registration.proceed}" 
+								 update=":registerPanel :errorMessages" 
+								 style="font-size:15px;width:150px;height:35px;margin-top:5px;float:right"/>
 				<p:spacer />
 				<p:commandLink id="backLink" style="font-size:15px;float:right" update=":loginPanel :registerPanel" immediate="true">
 					<f:setPropertyActionListener target="#{navigation.page}" value="login" />

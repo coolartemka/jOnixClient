@@ -1,6 +1,8 @@
 package fi.metropolia.ereading;
 
 import javax.faces.bean.*;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @SessionScoped
@@ -28,5 +30,9 @@ public class Navigation {
 	public void setLogin(String login) {
 		this.login = login;
 	}	
+	
+	public void logout(ActionEvent event) {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	}
 	
 }

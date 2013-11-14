@@ -9,7 +9,7 @@
 </h:head>
 <h:body>
 	<p:growl id="errorMessages" />
-	<p:panel id="loginPanel" header="Sign In" style="width:380px;margin:auto auto" visible="#{navigation.page == 'login'}">
+	<p:panel id="loginPanel" header="Sign In" style="width:380px;margin:auto auto" visible="#{clientSession.page == 'login'}">
 		<h:form>
 			<h:panelGrid columns="2">				
 				<p:outputLabel for="login" value="Login:" style="display:block;text-align:right;font-weight:bold" />
@@ -22,13 +22,13 @@
 								 style="font-size:15px;width:150px;height:35px;margin-top:5px;float:right"/>
 				<p:spacer />
 				<p:commandLink id="registrationLink" style="font-size:15px;float:right" update=":loginPanel :registerPanel" immediate="true">
-					<f:setPropertyActionListener target="#{navigation.page}" value="register" />
+					<f:setPropertyActionListener target="#{clientSession.page}" value="register" />
 					<h:outputText value="Have no account?" />
 				</p:commandLink>
 			</h:panelGrid>
 		</h:form>
 	</p:panel>
-	<p:panel id="registerPanel" header="Register" style="width:430px;margin:auto auto" visible="#{navigation.page == 'register'}">
+	<p:panel id="registerPanel" header="Register" style="width:450px;margin:auto auto" visible="#{clientSession.page == 'register'}">
 		<h:form>
 			<h:panelGrid columns="2">
 				<p:outputLabel for="login" value="New Login:" style="display:block;text-align:right;font-weight:bold" />
@@ -42,7 +42,7 @@
 								 style="font-size:15px;width:150px;height:35px;margin-top:5px;float:right"/>
 				<p:spacer />
 				<p:commandLink id="backLink" style="font-size:15px;float:right" update=":loginPanel :registerPanel" immediate="true">
-					<f:setPropertyActionListener target="#{navigation.page}" value="login" />
+					<f:setPropertyActionListener target="#{clientSession.page}" value="login" />
 					<h:outputText value="Back" />
 				</p:commandLink>
 			</h:panelGrid>

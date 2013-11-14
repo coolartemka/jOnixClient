@@ -19,29 +19,29 @@
 			<h:form>
 				<p:menubar>
 					<p:menuitem value="Home" update=":content" style="vertical-align:bottom" icon="ui-icon-home">
-						<f:setPropertyActionListener target="#{navigation.page}" value="home" />
+						<f:setPropertyActionListener target="#{clientSession.page}" value="home" />
 					</p:menuitem>					
 					<p:menuitem value="Browse Messages" update=":content" icon="ui-icon-folder-open">
-						<f:setPropertyActionListener target="#{navigation.page}" value="browse" />
+						<f:setPropertyActionListener target="#{clientSession.page}" value="browse" />
 					</p:menuitem>
 					<p:menuitem value="Send Message" update=":content" icon="ui-icon-mail-closed">
-						<f:setPropertyActionListener target="#{navigation.page}" value="send" />
+						<f:setPropertyActionListener target="#{clientSession.page}" value="send" />
 					</p:menuitem>
 					<p:menuitem value="Output Bus" update=":content" style="vertical-align:bottom" icon="ui-icon-transferthick-e-w">
-						<f:setPropertyActionListener target="#{navigation.page}" value="output" />
+						<f:setPropertyActionListener target="#{clientSession.page}" value="output" />
 					</p:menuitem>		
 					<p:menuitem value="Settings" update=":content" icon="ui-icon-wrench">
-						<f:setPropertyActionListener target="#{navigation.page}" value="settings" />
+						<f:setPropertyActionListener target="#{clientSession.page}" value="settings" />
 					</p:menuitem>
 					<f:facet name="options">
-						<p:commandButton value="Sign Out" icon="ui-icon-closethick" actionListener="#{navigation.logout}" action="index" />
+						<p:commandButton value="Sign Out" icon="ui-icon-closethick" actionListener="#{clientSession.logout}" action="index" />
 					</f:facet>
 				</p:menubar> 
 			</h:form>
 		</p:layoutUnit>
 		<p:layoutUnit position="center">
 			<p:panel id="content">
-				<ui:include src="#{navigation.page}.xhtml" />
+				<ui:include src="#{clientSession.page}.xhtml" />
 			</p:panel>
 		</p:layoutUnit>
 	</p:layout>

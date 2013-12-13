@@ -7,6 +7,10 @@ import javax.faces.event.ActionEvent;
 
 import com.mongodb.*;
 
+/**
+ * Backing bean which controls the procedure of registration or sign-in.
+ * @author Artem Moskalev
+ */
 @ManagedBean
 @RequestScoped
 public class Registration {

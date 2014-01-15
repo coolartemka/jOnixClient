@@ -1,0 +1,48 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<h1>Message Box</h1>
+<h:form id="form">
+	<p:dataTable id="messages" var="message" value="#{tableBean.headers}">
+		<p:column headerText="Sender" style="width:24%">  
+            <h:outputText value="#{message.sender}" />  
+        </p:column>  
+        <p:column headerText="Contact Email" style="width:24%">  
+            <h:outputText value="#{message.email}" />  
+        </p:column>  
+        <p:column headerText="Date and Time" style="width:24%">  
+            <h:outputText value="#{message.time}" />  
+        </p:column>  
+        <p:column headerText="Message Note" style="width:24%">  
+            <h:outputText value="#{message.note}" />  
+        </p:column>  
+        <p:column style="width:4%">  
+            <p:commandButton id="selectButton" update=":form:display" oncomplete="PF('carDialog').show()" 
+            								   icon="ui-icon-search" title="View">  
+                <f:setPropertyActionListener value="#{message}" target="#{tableBean.selectedMessage}" />  
+            </p:commandButton>  
+        </p:column>    
+    </p:dataTable>  
+    <p:dialog id="dialog" header="Message Contents" widgetVar="carDialog" resizable="false"  
+                showEffect="fade" hideEffect="explode">  
+          <p:accordionPanel id="display" value="#{tableBean.records}" var="record">
+   				 <p:tab title="Product &quot;#{record.reference}&quot;">
+   				 	 	<p:panelGrid columns="2">
+	   				 		<h:outputText value="Record Purpose: " style="display:block;width:300px"/>
+	   				 		<h:outputText value="#{record.notificationType}" style="display:block;width:300px"/>	   				 		
+	   				 	</p:panelGrid>
+	   				 	<ui:repeat value="#{record.ids}" var="id">
+	   				 		<p:panelGrid columns="2">
+	   				 			<h:outputText value="Product ID (ID type): " style="display:block;width:300px" />
+	   				 			<h:outputText value="#{id.IDValue.value}(#{id.productIDType.value})" style="display:block;width:300px"/>
+	   				 		</p:panelGrid>
+	   				 	</ui:repeat>
+   				 </p:tab>   
+   		  </p:accordionPanel>       
+     </p:dialog>  
+</h:form>
+
+</ui:composition>

@@ -1,0 +1,9 @@
+fi/metropolia/ereading/Registration.class
+fi/metropolia/ereading/Message.class
+fi/metropolia/ereading/TableBean.class
+fi/metropolia/ereading/UserSession.class
+fi/metropolia/ereading/AccountSettings.class
+fi/metropolia/ereading/OutputBusBean.class
+fi/metropolia/ereading/MongoResource.class
+fi/metropolia/ereading/SendMessageBean.class
+fi/metropolia/ereading/Record.class

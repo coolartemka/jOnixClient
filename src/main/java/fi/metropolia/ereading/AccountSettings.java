@@ -50,6 +50,15 @@ public class AccountSettings {
 		DBCollection users = MongoResource.getClient().getDB("jOnix").getCollection("users");
 		users.update(new BasicDBObject("login", clientSession.getLogin()), new BasicDBObject("$set", 
 																			new BasicDBObject("addresseeName", addressee)));
+		
+		DBCollection registry = MongoResource.getClient().getDB("jOnix").getCollection("registry");
+		DBObject entry = registry.findOne(new BasicDBObject("key", getKey()));
+		
+		if(entry != null) {
+			registry.update(entry, new BasicDBObject("$set", 
+													 new BasicDBObject("organization", addressee)));
+		}
+		
 		FacesContext.getCurrentInstance()
 					.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Organization Name has been saved!", "Saved!"));
 	}
@@ -93,8 +102,34 @@ public class AccountSettings {
 	public void generateKey(ActionEvent event) {		
 		String key = UUID.randomUUID().toString();
 		DBCollection users = MongoResource.getClient().getDB("jOnix").getCollection("users");
+		
+		DBCollection registry = MongoResource.getClient().getDB("jOnix").getCollection("registry");
+
+		DBObject temp = users.findOne(new BasicDBObject("key", getKey()));
+		String prevKey = null;
+		
+		if(temp != null) {			
+			prevKey = temp.get("key").toString();			
+		}
 		users.update(new BasicDBObject("login", clientSession.getLogin()),  
 					 new BasicDBObject("$set", new BasicDBObject("key", key)));
+		
+		/* now updating the registry with organization names */
+		DBObject entry = registry.findOne(new BasicDBObject("key", prevKey));
+		
+		if (entry == null) {			
+			DBObject organizationEntry = users.findOne(new BasicDBObject("login", clientSession.getLogin()));
+			Object ob = organizationEntry.get("addresseeName");
+			if(ob != null) {
+				registry.insert(new BasicDBObject("key", key).append("organization", ob.toString()));
+			} else {
+				registry.insert(new BasicDBObject("key", key).append("organization", key));
+			}
+		} else {
+			registry.update(new BasicDBObject("key", prevKey),  
+							new BasicDBObject("$set", new BasicDBObject("key", key)));
+		}	
+		
 	}		
 	
 }
